@@ -652,32 +652,41 @@ label scene_6_1:
     Nikol "Эй!"
     Nikol "Здесь кто-нибудь есть?"
     # Пауза
+    scene expression Transform("images/bg_pict/abandoned_amusement_park_15.png", fit="cover") with fade    
     author "Издалека донесся тихий металлический скрип. Одна из лошадей на старой карусели медленно повернулась к Николь."
     author "Николь замерла"
-    Nikol "Да что это за бред такой??"
+    scene expression Transform("images/bg_pict/abandoned_amusement_park_16.png", fit="cover") with fade    
+    Nikol "Да что это за бред такой??" 
     author "Карусель снова стала неподвижной"
+    scene expression Transform("images/bg_pict/abandoned_amusement_park_17.png", fit="cover") with fade      
     Nikol "[[Про себя] Мне показалось "
     Nikol "[[Про себя] Это просто ветер "
     scene expression Transform("images/bg_pict/abandoned_amusement_park_20.png", fit="cover") with fade
     # Звук: капля воды падает на металлическую поверхность. Затем ещё одна.
+    scene expression Transform("images/bg_pict/abandoned_amusement_park_18.png", fit="cover") with fade    
     author "Николь заметила под ногами небольшую лужу."
     author "Она взглянула в отражение"
     # В отражении видна не Николь, а тёмная фигура, стоящая у неё за спиной.
-    Nikol "A..."
-    author "Николь резко обернулась"
+    scene expression Transform("images/bg_pict/abandoned_amusement_park_19.png", fit="cover") with fade 
+    Nikol "A...???"
+    author "Николь резко откинулась назад"
     
 label scene_6_2:
     # Звук: низкий утробный рык. Очень близко. На фоне появляется тёмный силуэт Монстра. Сначала видны только две тускло светящиеся красные точки. Затем из тумана проявляется тело высотой около двух метров.
     # Его конечности непропорционально длинные, а очертания постоянно меняются, словно существо состоит из дыма и мокрой чёрной ткани. Монстр медленно склоняет голову набок.
     # Его рык не просто слышен — вибрация ощущается физически. VFX: лёгкое дрожание экрана.
+    scene expression Transform("images/bg_pict/abandoned_amusement_park_41.png", fit="cover") with fade     
     Nikol "[[Про себя] Нет нет нет...»"
     author "Монстр cдела шаг вперёд. Звук - тяжёлый удар когтей о землю отдался болью в голове. Николь пыталась вдохнуть, но от страха все пережало."
     Nikol "[[Про себя] Оно смотрит прямо на меня...»"    
     author "Монстр сделал ещё один шаг..."
+    scene expression Transform("images/bg_pict/abandoned_amusement_park_42.png", fit="cover") with fade     
     Nikol "[[Про себя] Оно знает, что я боюсь...оно будто видит меня насквозь...»" 
+    scene expression Transform("images/bg_pict/abandoned_amusement_park_43.png", fit="cover") with fade    
     author "По телу Монстра прошли едва различимые человеческие лица. Они возникали на секунду и снова исчезали в тёмной массе."
     MonsterNew "Николь..."
     author "...Николь всю передернула...волна судорог прокатилась по всему телу"
+    scene expression Transform("images/bg_pict/abandoned_amusement_park_44.png", fit="cover") with fade    
     Nikol "[[Про себя] Оно знает моё имя."
     Nikol "[[Про себя] Мне надо срочно что то сделать."
 
