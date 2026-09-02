@@ -2,8 +2,84 @@
 ## Инициализация
 ################################################################################
 
-init offset = -1
+# В начале игры вспышки нет.
+default menu_flash = None
 
+# Список всех картинок, которые могут использоваться
+# для случайных вспышек.
+init python:
+    menu_flash_images = [
+        "images/mainMenuScene/gameMenuGoldSouls1.png",
+        "images/mainMenuScene/gameMenuWhiteSouls1.png",
+        "images/mainMenuScene/gameMenuKaelFight1.png",
+        "images/mainMenuScene/gameMenuKaelFight2.png",
+        "images/mainMenuScene/gameMenuKaelFight3.png",
+        "images/mainMenuScene/gameMenuKaelJump1.png",
+        "images/mainMenuScene/gameMenuNikolLooksOnYou1.png",
+        "images/mainMenuScene/gameMenuNikolMask1.png",
+        "images/mainMenuScene/gameMenuNikolMask2.png",
+        "images/mainMenuScene/gameMenuNikolMonster1.png",
+        "images/mainMenuScene/gameMenuNikolMonster2.png",
+        "images/mainMenuScene/gameMenuNikolUglyFace1.png",
+        "images/mainMenuScene/gameMenuSmile1.png",
+    ]
+    
+#    def get_random_menu_flash():
+#        return renpy.random.choice(menu_flash_images)
+    def get_random_menu_flash():
+
+        # Получаем случайное число от 1 до 100.
+        roll = renpy.random.randint(1, 100)
+        # Если выпало от 1 до 60 —
+        # выбираем одну из ЧАСТЫХ картинок.
+        if roll <= 60:
+            return renpy.random.choice([
+                "images/mainMenuScene/gameMenuGoldSouls1.png",
+                "images/mainMenuScene/gameMenuWhiteSouls1.png",
+                "images/mainMenuScene/gameMenuKaelJump1.png",
+                "images/mainMenuScene/gameMenuNikolLooksOnYou1.png",
+            ])
+
+        # Если выпало от 61 до 90 —
+        # выбираем одну из СРЕДНИХ картинок.
+        elif roll <= 90:
+
+            return renpy.random.choice([
+                "images/mainMenuScene/gameMenuKaelFight1.png",
+                "images/mainMenuScene/gameMenuKaelFight2.png",
+                "images/mainMenuScene/gameMenuNikolMask1.png",
+                "images/mainMenuScene/gameMenuNikolMask2.png",
+                "images/mainMenuScene/gameMenuSmile1.png",
+
+            ])
+
+
+        # Если выпало от 91 до 100 —
+        # выбираем одну из РЕДКИХ картинок.
+        else:
+
+            return renpy.random.choice([
+                "images/mainMenuScene/gameMenuKaelFight3.png",
+                "images/mainMenuScene/gameMenuNikolMonster1.png",
+                "images/mainMenuScene/gameMenuNikolMonster2.png",
+                "images/mainMenuScene/gameMenuNikolUglyFace1.png",
+            ])
+
+
+
+
+
+    def set_menu_flash():
+    # Позволяем функции изменить глобальную переменную.
+        global menu_flash
+    # Выбираем случайную картинку.
+        menu_flash = get_random_menu_flash()
+    # Просим Ren'Py сразу обновить экран.
+        renpy.restart_interaction()
+
+
+
+init offset = -1
 
 ################################################################################
 ## Стили
@@ -376,7 +452,26 @@ screen main_menu():
 
     #add gui.main_menu_background
     #кустомный экран
-    add "images/gameMenu.png"
+    #add "images/gameMenu.png"
+    add "images/mainMenuScene/gameMenu.png"
+    
+    # Если есть активная вспышка —
+    # показываем её поверх основного фона.
+    if menu_flash is not None:
+        # Показываем выбранную картинку поверх основного фона.
+        add menu_flash:
+            xsize config.screen_width
+            ysize config.screen_height
+        # Через 0.1 секунды убираем её.
+        # от 0.04 до 0.12 секунды.
+        timer renpy.random.uniform(0.04, 5.00) action SetVariable("menu_flash", None)
+
+
+    # Если вспышки сейчас нет.
+    else:
+        # Ждём случайное время от 2 до 5 секунд.
+        # Затем запускаем Smile1.
+        timer renpy.random.uniform(2.0, 10.0) action Function(set_menu_flash)
     ## Эта пустая рамка затеняет главное меню.
     
     #frame:
