@@ -1,7 +1,37 @@
 ﻿# Отмена продолжения автовыбора строка 656
 #init python:
 #    scen_6_2fork=0    
-    
+transform impact_shake:
+
+    linear 0.03 xoffset -12
+    linear 0.03 xoffset 10
+    linear 0.03 xoffset -7
+    linear 0.03 xoffset 5
+    linear 0.03 xoffset 0
+
+    linear 0.03 xoffset -10
+    linear 0.03 xoffset 8
+    linear 0.03 xoffset -6
+    linear 0.03 xoffset 4
+    linear 0.03 xoffset 0
+
+    linear 0.03 xoffset -8
+    linear 0.03 xoffset 6
+    linear 0.03 xoffset -4
+    linear 0.03 xoffset 3
+    linear 0.03 xoffset 0
+
+    linear 0.03 xoffset -6
+    linear 0.03 xoffset 5
+    linear 0.03 xoffset -3
+    linear 0.03 xoffset 2
+    linear 0.03 xoffset 0
+
+    linear 0.03 xoffset -4
+    linear 0.03 xoffset 3
+    linear 0.03 xoffset -2
+    linear 0.03 xoffset 0 
+    repeat
     
 '''Шаблон
 
@@ -712,13 +742,32 @@ label scene_6_2:
             jump scene6_2_score_3
                 
 label scene6_2_score_1:
+    scene expression Transform("images/bg_pict/nikolClosedHerYes_10.png", fit="cover") with fade
+    
     author "Николь закрыла лицо руками и сжалась...ожидая удар"
-    Nikol "[[Про себя] Это всё не со мной."    
+    Nikol "[[Про себя] Это всё не со мной."  
+    
+    show expression Transform("images/bg_pict/nikolClosedHerYes_20.png", fit="cover")
+    pause 0.05
+    hide expression Transform("images/bg_pict/nikolClosedHerYes_20.png", fit="cover")
+    scene expression Transform("images/bg_pict/nikolClosedHerYes_10.png", fit="cover") at impact_shake
+
+
+    
     Nikol "[[Про себя] Это сон. Просто кошмар."     
     Nikol "[[Про себя] Если я закрою глаза, оно исчезнет"
     # SELF: -2 — полное подчинение страху. MEANING: -1 — потеря связи с происходящим. ESCAPE: +3 — психическое бегство в отрицание.
+    
+    show expression Transform("images/bg_pict/nikolClosedHerYes_10.png", fit="cover")
+    pause 0.5
+    hide expression Transform("images/bg_pict/nikolClosedHerYes_10.png", fit="cover")
+    scene expression Transform("images/bg_pict/nikolClosedHerYes_20.png", fit="cover") at impact_shake
+    
+    
+    
     MonsterNew "Вот так..."
     MonsterNew "Не смотри..."
+    scene expression Transform("images/bg_pict/nikolClosedHerYes_30.png", fit="cover") at impact_shake   
     MonsterNew "Ты всегда была хороша только в одном — притворяться...и исчезать...."
 jump scene6_3
 
@@ -749,13 +798,23 @@ label scene6_2_score_3:
 jump scene6_3     
 
 label scene6_3:
-    author "Монстр резко бросилася на Николь"
+    scene expression Transform("images/bg_pict/nikolClosedHerYes_40.png", fit="cover") at impact_shake 
+    author "Монстр медленно наклонился  к Николь"
     author "Его пасть раскрылас....но...."
     author "Внутри небыло зубов — только глубокий чёрный коридор, из которого доносились шёпоты."
+    show expression Transform("images/bg_pict/kaelGetReady05.png", fit="cover") with fade
+    pause 0.5
+    scene expression Transform("images/bg_pict/nikolClosedHerYes_50.png", fit="cover") at impact_shake 
     MonsterGolosa "Бездарность"
     MonsterGolosa "Ошибка"
     MonsterGolosa "Не показывай это никому"
+    show expression Transform("images/bg_pict/kaelGetReady10.png", fit="cover") with fade
+    pause 0.5
+    scene expression Transform("images/bg_pict/nikolClosedHerYes_50.png", fit="cover") at impact_shake
     MonsterGolosa "У других получается лучше"
+    show expression Transform("images/bg_pict/kaelGetReady20.png", fit="cover") with fade
+    pause 0.5   
+    scene expression Transform("images/bg_pict/nikolClosedHerYes_50.png", fit="cover") at impact_shake    
     MonsterGolosa "Ты зря стараешься"
 
 label scene6_4:

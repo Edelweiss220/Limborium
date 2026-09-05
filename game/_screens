@@ -6,90 +6,19 @@
 default menu_flash = None
 
 # ==========================================================
-# РОЙ МОТЫЛЬКОВ
+# ПАРАМЕТРЫ ПЯТИ МОТЫЛЬКОВ
 # ==========================================================
 
-# Параметры роя хранятся внутри экрана main_menu.
-# Поэтому обычное обновление экрана из-за вспышки
-# не создаёт новые траектории.
+default butterfly_1 = None
+default butterfly_2 = None
+default butterfly_3 = None
+default butterfly_4 = None
+default butterfly_5 = None
+default butterfly_path_y = []
 
 # Список всех картинок, которые могут использоваться
 # для случайных вспышек.
 init python:
-
-# ==========================================================
-# ПАРАЛЛАКС ГЛАВНОГО МЕНЮ
-# Фон слегка реагирует на движение мыши.
-# ==========================================================
-
-    def menu_mouse_parallax_update(trans, st, at):
-
-        # Получаем текущую позицию мыши.
-        mouse_x, mouse_y = renpy.get_mouse_pos()
-
-        # Размер игрового окна.
-        screen_w = config.screen_width
-        screen_h = config.screen_height
-
-        # Определяем положение мыши относительно центра.
-        mouse_normal_x = (mouse_x / float(screen_w)) - 0.5
-        mouse_normal_y = (mouse_y / float(screen_h)) - 0.5
-
-        # Сила движения фона.
-        target_x = -mouse_normal_x * 30
-        target_y = -mouse_normal_y * 20
-
-        # Плавно двигаем фон.
-        trans.xoffset += (target_x - trans.xoffset) * 0.15
-        trans.yoffset += (target_y - trans.yoffset) * 0.15
-
-        # Обновляем положение.
-        return 0.016
-        
-    def menu_flash_parallax_update(trans, st, at):
-
-        # Получаем положение мыши.
-        mouse_x, mouse_y = renpy.get_mouse_pos()
-
-        # Размер окна.
-        screen_w = config.screen_width
-        screen_h = config.screen_height
-
-        # Положение мыши относительно центра.
-        mouse_normal_x = (mouse_x / float(screen_w)) - 0.5
-        mouse_normal_y = (mouse_y / float(screen_h)) - 0.5
-
-        # --------------------------------------------------
-        # ОСНОВНАЯ СИЛА ПАРАЛЛАКСА ВСПЫШКИ
-        # Немного сильнее, чем у обычного фона.
-        # --------------------------------------------------
-
-        base_x = -mouse_normal_x * 36
-        base_y = -mouse_normal_y * 24
-
-        # --------------------------------------------------
-        # КОРОТКИЙ РЫВОК В МОМЕНТ ПОЯВЛЕНИЯ
-        # --------------------------------------------------
-
-        import math
-
-        # Сильнее всего примерно через 0.07 секунды.
-        pulse = 0.35 * math.exp(-((st - 0.07) / 0.045) ** 2)
-
-        # Добавляем импульс к обычному параллаксу.
-        target_x = base_x * (1.0 + pulse)
-        target_y = base_y * (1.0 + pulse)
-
-        # Плавное движение к новой позиции.
-        trans.xoffset += (target_x - trans.xoffset) * 0.25
-        trans.yoffset += (target_y - trans.yoffset) * 0.25
-
-        # Обновляем положение.
-        return 0.016
-
-
-
-
 
     menu_flash_images = [
         "images/mainMenuScene/gameMenuGoldSouls1.png",
@@ -163,34 +92,10 @@ init python:
         
 
 # ==========================================================
-# ПОЛУЧАЕМ СЛУЧАЙНЫЕ ПАРАМЕТРЫ МОТЫЛЬКОВ
+# ПОЛУЧАЕМ НОВЫЕ СЛУЧАЙНЫЕ ПАРАМЕТРЫ
 # ==========================================================
 
-    def butterfly_random_params(start_x=1.10, start_delay=0.0):
-
-        # ==========================================================
-        # ВНЕШНИЙ ВИД МОТЫЛЬКА
-        # ==========================================================
-
-        # Случайный тип мотылька.
-        butterfly_image = renpy.random.choice([
-            "images/mainMenuScene/butterfly/butterfly1.png",
-            "images/mainMenuScene/butterfly/butterfly2.png",
-            "images/mainMenuScene/butterfly/butterfly3.png",
-            "images/mainMenuScene/butterfly/butterfly4.png",
-            "images/mainMenuScene/butterfly/butterfly5.png",
-        ])
-
-        # Случайный размер.
-        butterfly_zoom = renpy.random.uniform(0.07, 0.15)
-
-        # Начальная горизонтальная позиция.
-        # Все мотыльки начинают за правым краем экрана.
-        start_x = start_x
-
-        # Индивидуальная задержка перед вылетом.
-        # Пока задержка не закончилась, мотылёк не движется.
-        start_delay = start_delay
+    def butterfly_random_params():
 
         # Случайная высота появления.
         start_y = renpy.random.uniform(0.10, 0.85)
@@ -204,36 +109,7 @@ init python:
         # Сила наклона мотылька.
         rotation_amount = renpy.random.uniform(5.0, 12.0)
 
-        # ==========================================================
-        # УНИКАЛЬНАЯ ГОРИЗОНТАЛЬНАЯ ТРАЕКТОРИЯ
-        # ==========================================================
-
-        # Каждая следующая точка находится левее предыдущей.
-        # Поэтому мотылёк всегда движется справа налево.
-        remaining = start_x + 0.15
-        step = remaining / 6.0
-
-        path_x = []
-        previous_x = start_x
-
-        for i in range(6):
-
-            jitter = renpy.random.uniform(-0.015, 0.015)
-            target_x = start_x - step * (i + 1) + jitter
-
-            # Не позволяем случайности развернуть мотылька обратно вправо.
-            target_x = min(target_x, previous_x - 0.01)
-
-            # Ограничиваем левым краем.
-            target_x = max(target_x, -0.15)
-
-            path_x.append(target_x)
-            previous_x = target_x
-
-        # ==========================================================
-        # УНИКАЛЬНАЯ ВЕРТИКАЛЬНАЯ ТРАЕКТОРИЯ
-        # ==========================================================
-
+        # У каждого мотылька СВОЯ траектория.
         path_y = [
             renpy.random.uniform(0.05, 0.95),
             renpy.random.uniform(0.05, 0.95),
@@ -244,87 +120,31 @@ init python:
         ]
 
         return (
-            butterfly_image,
-            butterfly_zoom,
-            start_x,
-            start_delay,
             start_y,
             flight_time,
             wave_height,
             rotation_amount,
-            path_x,
             path_y
         )
 
 
-    def create_butterfly_swarm(count=24):
+    def set_butterfly_random_params():
 
-        # Создаём список независимых мотыльков.
-        swarm = []
+        global butterfly_1
+        global butterfly_2
+        global butterfly_3
+        global butterfly_4
+        global butterfly_5
 
-        # Все мотыльки начинают за правым краем,
-        # но выходят в сцену не одновременно.
-        # Это создаёт ощущение естественного потока,
-        # а не общего фронта.
-        elapsed = 0.0
-
-        for i in range(count):
-
-            # Небольшой случайный интервал между появлениями.
-            if i == 0:
-                start_delay = 0.0
-            else:
-                elapsed += renpy.random.uniform(0.7, 1.3)
-                start_delay = elapsed + renpy.random.uniform(-0.35, 0.35)
-                start_delay = max(0.0, start_delay)
-
-            # Все начинают именно за правым краем.
-            start_x = 1.10
-
-            swarm.append(
-                butterfly_random_params(
-                    start_x,
-                    start_delay
-                )
-            )
-
-        # Перемешиваем порядок самих объектов,
-        # чтобы порядок создания не был заметен.
-        renpy.random.shuffle(swarm)
-
-        return swarm
-
-# ==========================================================
-# ПАРАЛЛАКС ВСПЫШКИ
-# Более сильный и с коротким импульсом.
-# ==========================================================
-
-transform menu_flash_parallax:
-
-    xalign 0.5
-    yalign 0.5
-
-    zoom 1.02
-
-    function menu_flash_parallax_update
-
-
-
+        # Каждый мотылёк получает СВОЙ набор параметров.
+        butterfly_1 = butterfly_random_params()
+        butterfly_2 = butterfly_random_params()
+        butterfly_3 = butterfly_random_params()
+        butterfly_4 = butterfly_random_params()
+        butterfly_5 = butterfly_random_params()
 
 init offset = -1
 
-
-
-transform menu_mouse_parallax:
-
-    xalign 0.5
-    yalign 0.5
-
-    # Увеличиваем изображение,
-    # чтобы при движении не появились края.
-    zoom 1.02
-
-    function menu_mouse_parallax_update
 ################################################################################
 ## Стили
 ################################################################################
@@ -693,14 +513,10 @@ style navigation_button_text:
 # ТЕСТОВЫЙ ПОЛЁТ ОДНОГО МОТЫЛЬКА
 # ==================================================
 transform butterfly_test(
-    butterfly_zoom,
-    start_x,
-    start_delay,
     start_y,
     flight_time,
     wave_height,
     rotation_amount,
-    path_x,
     path_y
 ):
 
@@ -708,8 +524,8 @@ transform butterfly_test(
     # НАЧАЛО ПОЛЁТА
     # ==========================================================
 
-    # Каждый мотылёк начинает за правым краем экрана.
-    xpos start_x
+    # Появляемся за правым краем экрана.
+    xpos 1.10
 
     # У каждого мотылька своя высота.
     ypos start_y
@@ -717,15 +533,11 @@ transform butterfly_test(
     # Вращение вокруг центра самого мотылька.
     anchor (0.5, 0.5)
 
-    # Размер этого конкретного мотылька.
-    zoom butterfly_zoom
+    # Размер.
+    zoom 0.12
 
     # Смотрим влево.
     xzoom -1
-
-    # Каждый мотылёк ждёт своё время перед вылетом.
-    # Пока ждёт — остаётся за правым краем экрана.
-    pause start_delay
 
 
     # ==========================================================
@@ -734,18 +546,18 @@ transform butterfly_test(
 
     parallel:
 
-        # Справа -> влево по собственной траектории.
-        linear (flight_time * 0.17) xpos path_x[0] ypos path_y[0]
+        # Справа -> влево.
+        linear (flight_time * 0.17) xpos 0.85 ypos path_y[0]
 
-        linear (flight_time * 0.17) xpos path_x[1] ypos path_y[1]
+        linear (flight_time * 0.17) xpos 0.65 ypos path_y[1]
 
-        linear (flight_time * 0.17) xpos path_x[2] ypos path_y[2]
+        linear (flight_time * 0.17) xpos 0.45 ypos path_y[2]
 
-        linear (flight_time * 0.17) xpos path_x[3] ypos path_y[3]
+        linear (flight_time * 0.17) xpos 0.25 ypos path_y[3]
 
-        linear (flight_time * 0.17) xpos path_x[4] ypos path_y[4]
+        linear (flight_time * 0.17) xpos 0.05 ypos path_y[4]
 
-        linear (flight_time * 0.15) xpos path_x[5] ypos path_y[5]
+        linear (flight_time * 0.15) xpos -0.15 ypos path_y[5]
 
         repeat
 
@@ -788,11 +600,9 @@ transform butterfly_test(
 
     parallel:
 
-        # Каждый мотылёк немного меняет размер
-        # относительно своего собственного масштаба.
-        ease 6.0 zoom (butterfly_zoom * 1.04)
+        ease 6.0 zoom 0.125
 
-        ease 7.0 zoom (butterfly_zoom * 0.96)
+        ease 7.0 zoom 0.115
 
         repeat
 
@@ -816,40 +626,23 @@ screen main_menu():
     
     
     
-    add "images/mainMenuScene/gameMenu.png" at menu_mouse_parallax
+    add "images/mainMenuScene/gameMenu.png"
+    on "show" action Function(set_butterfly_random_params)
 
-    # ======================================================
-    # РОЙ МОТЫЛЬКОВ — РЕВИЗИЯ 2
-    # ======================================================
+    # Первый мотылёк.
+    add "images/mainMenuScene/butterfly/butterfly1.png" at butterfly_test(*butterfly_random_params())
 
-    # Создаём рой один раз для этого показа главного меню.
-    # При restart_interaction() этот список не пересоздаётся.
-    default butterfly_swarm = create_butterfly_swarm(24)
+    # Второй мотылёк.
+    add "images/mainMenuScene/butterfly/butterfly1.png" at butterfly_test(*butterfly_random_params())
 
-    # Каждый мотылёк получает:
-    # [0] свою картинку
-    # [1] свой размер
-    # [2] свою позицию по X
-    # [3] свою задержку перед вылетом
-    # [4] свою начальную высоту
-    # [5] свою скорость
-    # [6] своё покачивание
-    # [7] свой наклон
-    # [8] траекторию по X
-    # [9] траекторию по Y
-    for butterfly in butterfly_swarm:
+    # Третий мотылёк.
+    add "images/mainMenuScene/butterfly/butterfly1.png" at butterfly_test(*butterfly_random_params())
 
-        add butterfly[0] at butterfly_test(
-            butterfly[1],
-            butterfly[2],
-            butterfly[3],
-            butterfly[4],
-            butterfly[5],
-            butterfly[6],
-            butterfly[7],
-            butterfly[8],
-            butterfly[9]
-        )
+    # Четвёртый мотылёк.
+    add "images/mainMenuScene/butterfly/butterfly1.png" at butterfly_test(*butterfly_random_params())
+
+    # Пятый мотылёк.
+    add "images/mainMenuScene/butterfly/butterfly1.png" at butterfly_test(*butterfly_random_params())
     
     
     
@@ -857,18 +650,18 @@ screen main_menu():
     # показываем её поверх основного фона.
     if menu_flash is not None:
         # Показываем выбранную картинку поверх основного фона.
-        add menu_flash at menu_flash_parallax:
+        add menu_flash:
             xsize config.screen_width
             ysize config.screen_height
-        # Через очень короткое случайное время убираем её.
-        # От 0.04 до 0.12 секунды.
-        timer renpy.random.uniform(0.50, 6.00) action SetVariable("menu_flash", None)
+        # Через 0.1 секунды убираем её.
+        # от 0.04 до 0.12 секунды.
+        timer renpy.random.uniform(0.04, 5.00) action SetVariable("menu_flash", None)
 
 
     # Если вспышки сейчас нет.
     else:
-        # Ждём случайное время от 2 до 10 секунд.
-        # Затем запускаем следующую вспышку.
+        # Ждём случайное время от 2 до 5 секунд.
+        # Затем запускаем Smile1.
         timer renpy.random.uniform(2.0, 10.0) action Function(set_menu_flash)
     ## Эта пустая рамка затеняет главное меню.
     
