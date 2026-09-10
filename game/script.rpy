@@ -819,26 +819,33 @@ label scene6_3:
 
 label scene6_4:
     #Экран резко темнеет.
+    scene expression Transform("images/bg_pict/Pack1/kaelAfterJump0.png", fit="cover") with fade
     #Звук: резкий свист рассекаемого воздуха.
+    scene expression Transform("images/bg_pict/Pack1/kaelJump1.png", fit="cover") with fade   
     #Затем — удар, похожий на щелчок хлыста.
+    
     #Монстра сменяется визгом.
     #Тёмно-серый спрайт кота cat jump пролетает через экран и врезается в морду Монстра.
     #VFX: вспышка серебристых когтей.
+    scene expression Transform("images/bg_pict/Pack1/kaelJump10.png", fit="cover") with fade   
     #От тела Монстра отрываются клочья чёрного тумана.
     #Монстр отлетает в сторону и ударяется о металлическое ограждение карусели.
     #Звук: тяжёлый металлический грохот.
     #Короткая музыкальная тема Каэля: решительная мелодия с едва заметными печальными нотами.
 
     #альтер Монстр отшатывается, но не падает. Каэль приземляется перед Николь. Его спина выгнута, шерсть вздыблена. На боку виден старый шрам.
-
+    scene expression Transform("images/bg_pict/Pack1/kaelTellsGoOff.png", fit="cover") with fade 
     Cat "Пошел прочь..."
     # Монстр медленно поднимается. Его тело становится выше и шире.
-    MonsterNew "Опять ты..."
+    MonsterNew "A....Опять ты..."
     #Монстр расправляется. Его тело вытягивается вверх, заслоняя аттракционы. Голос становится многоголосым: в нём слышатся насмешки взрослых, шёпот одноклассников и голос самой Николь.
     Cat "К сожалению.....для тебя"
     MonsterNew "Иди своей дорогой жалкий кот"
+    scene expression Transform("images/bg_pict/Pack1/MonsterRaisedAgain.png", fit="cover") with fade 
+    MonsterNew "Ты разве забыл кто Я такой?"
     MonsterNew "Она со мной..."    
-    Cat "Да ладно...тогда почему ты всё ещё пытаешься её убедить?"    
+    Cat "Да ладно...тогда почему ты всё ещё пытаешься её убедить?"
+    scene expression Transform("images/bg_pict/Pack1/MonsterRaisedAgain10.png", fit="cover") with fade     
     author "монст замер на секунду....по его телу прошла волна тёмного дыма."
     MonsterNew "Я лишь напомниаю ей правду..."
     author "голос монстра изменился. Теперь в нём слышались голоса нескольких людей: взрослых, детей и самой Николь"
@@ -871,11 +878,13 @@ label scene6_4:
     Cat "Ты уже давно стал эхо чужих слов..."   
     Cat "Ты просто падает, который повторяет чужое, а она перестала замечать разницу."
     MonsterNew "Красивые слова....кот"
+    scene expression Transform("images/bg_pict/Pack1/MonsterRaisedAgain10.png", fit="cover") with fade  
     MonsterNew "Но чувсвту, она верит мне."
     # Монстр резко взмахивает длинной рукой.
     # Каэль не успевает увернуться. Звук: тяжёлый удар. Каэля отбрасывает к сломанной карусели. Он падает на землю. Музыка обрывается.
     Nikol "Кот!!!"
     # Монстр поворачивается к ней.
+    scene expression Transform("images/bg_pict/Pack1/MonsterHitACat_20.png", fit="cover") with fade     
     MonsterNew "Посмотри на него."
     MonsterNew "Даже он недостаточно хорош..."
     MonsterNew "Совсем как ты...такой же жалкий и слабый"
@@ -907,8 +916,8 @@ label scene6_4:
 #отмена автовыбора
 
 label scene6_4_score_1:
+    scene expression Transform("images/bg_pict/Pack1/NikolEndsResit_10.png", fit="cover") with fade  
     author "Николь снова закрыла лицо"
-    
     #SELF: -1 MEANING: -1 ESCAPE: +1
     author "Она сжалась на землев клубочек и снова заплакала"
     Nikol "[[Про себя] Нет... Это всё не со мной"
@@ -930,8 +939,10 @@ label scene6_4_score_1:
     #Резкий удар
     #Каэль разрывает темноту
     #Идет сражение с монтсром
+    scene expression Transform("images/bg_pict/Pack1/kaelJump_20.png", fit="cover") with fade     
     MonsterNew "Не открывай глаза"
     MonsterNew "Там нет ничего, ради чего стоит сопротивляться"
+    
     MonsterNew "Брысь я сказал"
     author "Монстр сильным ударом сбил с ног кота еще раз"
     Cat "Николь!"
