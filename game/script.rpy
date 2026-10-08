@@ -112,11 +112,25 @@ label start:
 #    author "Рис Дети здают работы 2 шт."
     Teacher "-Дети, сдаем работы."
 
-    scene expression Transform("images/bg_pict/sc_school_42.png", fit="cover") with fade
+#    scene expression Transform("images/bg_pict/sc_school_42.png", fit="cover") with fade
+    scene expression Transform("images/scene_1/BG_school_main_view_nicol.png", fit="cover") with fade
+    show expression Transform("images/scene_1/sprites/nikol/nikol_protesting.png",zoom=0.65,xalign=0.15, yalign=1.0) as nikol_scene1 with dissolve
+# ДЗ - Сгенерировать картинку николь - спиной к мальберту. 2 позы. Будто она дорисовывает. 
     Nikol "[[ПРО СЕБЯ]Теперь вот здесь я добавлю цвета"
+#    jump scene_7
     Nikol "Хм….совсем неплохо получается, вот здесь еще немного добавлю тени..."   
-    Teacher "-Анна, ты что не слышала звонок?"
-    scene expression Transform("images/bg_pict/sc_school_47.png", fit="cover") with fade   
+# ДЗ: Подготовить подходящий спрайт учительницы для этого ракурса.
+    scene expression Transform("images/scene_1/BG_school_main_view_teacher.png", fit="cover") with fade
+    show expression Transform("images/scene_1/sprites/teacher/teacher_arms_crossed.png", zoom=0.65, xalign=0.85, yalign=1.0) as teacher_scene1 with dissolve
+    Teacher "-Николь, ты что не слышала звонок?"
+#    scene expression Transform("images/bg_pict/sc_school_47.png", fit="cover") with fade
+
+    scene expression Transform("images/scene_1/BG_school_main_view_nicol.png", fit="cover") with fade
+    show expression Transform("images/scene_1/sprites/nikol/nikol_protesting.png",zoom=0.65, xalign=0.15, yalign=1.0) as nikol_scene1 with dissolve
+
+
+
+   
 # Развилка 00_Пролог Максимов
     menu first_chice:
         "Дорисую. Всё равно":
@@ -127,20 +141,32 @@ label start:
             jump firstChoiceB1
             
 label firstChoiceA1:
-    scene expression Transform("images/bg_pict/sc_school_50.png", fit="cover") with fade 
+#    scene expression Transform("images/bg_pict/sc_school_50.png", fit="cover") with fade 
+    show expression Transform("images/scene_1/sprites/teacher/teacher_arms_crossed.png", zoom=0.65, xalign=0.85, yalign=1.0) as teacher_scene1 with dissolve
+# ДЗ - сгенрировать спрайт учительницы спиной подходящей к николь.
+# ДЗ - настроить анимацию что учительница подходит (движется)
     author "Учительница медленно подошла и встала у меня за спиной девочки"
     Teacher "Ты что, оглохла?"
     Nikol "Мне же совсем чуть чуть осталось дорисовать...посмотрите..."
+    show expression Transform("images/scene_1/sprites/teacher/teacher_examining_picture.png", zoom=0.65, xalign=0.85, yalign=1.0) as teacher_scene1 with dissolve
     author "тяжело вздыхая она смотрела на картину....затем на выхое продолжила..."
     Teacher "Ты как всегда делаешь все позже всех... я не принимаю твою работу."
+        # ДЗ: Проверить положение картины и урны относительно мольберта на фоне.
+    show expression Transform("images/scene_1/sprites/teacher/teacher_discarding_picture.png", zoom=0.65, xalign=0.85, yalign=1.0) as teacher_scene1 with dissolve
     author "она сорвала картину с мальберта и швырнула ее в урну"
     Teacher "Даже если бы тебе дать еще час времени ты все равно не сможешь нарисовать ничего путного."
+    show expression Transform("images/scene_1/sprites/nikol/nikol_tense.png", zoom=0.65, xalign=0.15, yalign=1.0) as nikol_scene1 with dissolve
     author "Николь чувствовала как растет напряжение..." 
+    show expression Transform("images/scene_1/sprites/teacher/teacher_lecturing.png",zoom=0.65,xalign=0.85, yalign=1.0) as teacher_scene1 with dissolve
+    
+ # ДЗ - сделать спрайт который изображает николь свирепым монстром который пытается укусить.   
+    
     Teacher "Да....более бездарной и недисциплинированной ученицы у меня еще было."
     author "...каждое слово повышало давление...Николь едва сдерживалась"     
     Teacher "Не понимаю как вообще тебя еще не отчислили, тебе самое место в школе для инвалидов...А еще..."
     Teacher "Подожди...а что ты на меня смотришь с таким идиотским выражением лица...Я сейчас..."
     author "...терпение николь лопнуло....и она:"
+    show expression Transform("images/scene_1/sprites/teacher/teacher_arms_crossed.png",zoom=0.65,xalign=0.85,yalign=1.0) as teacher_scene1 with dissolve
     menu first_choice:
         "Прикрыть лицо, убежать из аудитории":
             $p_ESCAPE=p_ESCAPE+1
@@ -153,7 +179,11 @@ label firstChoiceA1:
 
 label firstChoiceA11:
     # Нехватает картинки
+    # ДЗ: Проверить масштаб поз и переход от закрытого лица к бегству.
+    show expression Transform("images/scene_1/sprites/nikol/nikol_covering_face.png",zoom=0.65,xalign=0.15,yalign=1.0) as nikol_scene1 with dissolve
+    show expression Transform("images/scene_1/sprites/teacher/teacher_shouting.png",zoom=0.65,xalign=0.85,yalign=1.0) as teacher_scene1 with dissolve
     Teacher "Ах...ты...маленькое ничтожество..."
+    show expression Transform("images/scene_1/sprites/nikol/nikol_running.png",zoom=0.65,xalign=0.5,yalign=1.0) as nikol_scene1 with dissolve
     scene expression Transform("images/bg_pict/sc_corridor_10.png", fit="cover") with fade    
     author "С трудом сдерживая слезы Николь бежала прочь по лестнице, по корридору"
     scene expression Transform("images/bg_pict/sc_corridor_20.png", fit="cover") with fade
@@ -166,6 +196,7 @@ label firstChoiceA11:
 
 label firstChoiceA12: 
     # Нехватает картинки
+    show expression Transform("images/scene_1/sprites/teacher/teacher_shocked.png",zoom=0.65,xalign=0.85,yalign=1.0) as teacher_scene1 with dissolve
     author "Учительница просто опешила...она явное такого не ожидала от маленькой Николь"
     scene expression Transform("images/bg_pict/sc_corridor_10.png", fit="cover") with fade 
     Teacher "Ат...об....ах....ВООН ИЗ МОЕГО КАИБНЕТА маленькая мерзкая тварь....."
@@ -1062,6 +1093,39 @@ label scene6_4_score_3:
 
 label scene_7:    
     #Остатки тела Монстра растворяются в тумане. Звук: тяжёлое дыхание Николь. Ветер постепенно стихает. Музыка: тихая, тревожная тема. В ней впервые появляются более светлые ноты.
+    scene expression Transform(
+        "images/scene_7/bg_scene7.png",
+        xysize=(config.screen_width, config.screen_height),
+        fit="cover"
+    ) with fade
+
+    show expression Transform(
+        "images/scene_7/nikol_scene7.png",
+        ysize=int(config.screen_height * 0.92),
+        fit="contain"
+    ) as s7_nikol:
+        xanchor 0.5
+        xpos 0.3
+        yanchor 1.0
+        ypos 1.06
+
+    with dissolve
+
+    author "Николь несколько секунд смотрит на место, где исчез Монстр"
+    Nikol "Он умер?"
+
+    show expression Transform(
+        "images/scene_7/kael_scene7.png",
+        ysize=int(config.screen_height * 0.37),
+        fit="contain"
+    ) as s7_kael:
+        xanchor 0.5
+        xpos 0.68
+        yanchor 1.0
+        ypos 0.84
+
+    with dissolve
+
     author "Николь несколько секунд смотрит на место, где исчез Монстр"
     Nikol "Он умер?"
     Cat "Нет"
